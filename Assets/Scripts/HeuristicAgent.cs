@@ -78,12 +78,12 @@ namespace MBaske.Fighter
             Array.Clear(lerpActions, 0, numActions);
         }
 
-        public override void CollectObservations(VectorSensor sensor) // 194
+        public override void CollectObservations(VectorSensor sensor)
         {
             actionStep = 0;
         }
 
-        public override void OnActionReceived(float[] actions) // 37
+        public override void OnActionReceived(float[] actions)
         {
             actionStep++;
             float t = actionStep / (float)interval;

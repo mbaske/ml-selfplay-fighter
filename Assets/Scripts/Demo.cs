@@ -67,7 +67,6 @@ namespace MBaske.Fighter
         private Text textCrntMax;
 
         private bool isPaused;
-        private float endPauseThresh;
         private float pauseStartTime;
         private float timeSincePauseStart => Time.time - pauseStartTime;
 

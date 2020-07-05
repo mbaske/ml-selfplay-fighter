@@ -144,7 +144,7 @@ namespace MBaske.Fighter
             DownStepCount = 0;
         }
 
-        public override void CollectObservations(VectorSensor sensor) // 194
+        public override void CollectObservations(VectorSensor sensor)
         {
             if (opponent == null)
             {
@@ -207,7 +207,7 @@ namespace MBaske.Fighter
             sensor.AddObservation(Normalization.Sigmoid(root.Localize(v)));
         }
 
-        private List<float> GetJointObs() // 48
+        private List<float> GetJointObs()
         {
             jointObs.Clear();
             foreach (BallJoint joint in joints)
@@ -218,7 +218,7 @@ namespace MBaske.Fighter
             return jointObs;
         }
 
-        private List<float> GetRayObs() // 69
+        private List<float> GetRayObs()
         {
             // Normalize results to -1/+1 range.
             // With rayLength = 2, we don't need to scale hit.distance.
@@ -244,7 +244,7 @@ namespace MBaske.Fighter
             }
 
             // Detect ground.
-            foreach (Observables part in parts) // 6
+            foreach (Observables part in parts)
             {
                 rayObs.Add(Physics.Raycast(
                     part.Position, Vector3.down, out hit, rayLength, groundLayerMask)
@@ -260,7 +260,7 @@ namespace MBaske.Fighter
         }
 
 
-        public override void OnActionReceived(float[] actions) // 37
+        public override void OnActionReceived(float[] actions)
         {
             if (!ignoreActions)
             {
