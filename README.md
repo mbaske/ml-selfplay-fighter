@@ -1,7 +1,6 @@
 ## Self-Play Fighter - [Video](https://youtu.be/tIy3HmXz05A)
 
-Two humanoid agents compete in a boxing match. This is an update of an older project, made with [Unity Machine Learning Agents](https://github.com/Unity-Technologies/ml-agents).  
-You can find the previous version here [https://github.com/mbaske/ml-selfplay-fighter/tree/Version1](https://github.com/mbaske/ml-selfplay-fighter/tree/Version1)
+Two humanoid agents compete in a boxing match. This is an update of an older project, made with [Unity Machine Learning Agents](https://github.com/Unity-Technologies/ml-agents). You can find the previous version here [https://github.com/mbaske/ml-selfplay-fighter/tree/Version1](https://github.com/mbaske/ml-selfplay-fighter/tree/Version1)
 
 The included policy was trained with PPO in two stages: 
 1) Agents first learn to balance themselves, being rewarded for keeping their body root upright.
