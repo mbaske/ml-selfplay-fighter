@@ -4,20 +4,24 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MechLimb
+  - TargetA
+  - TargetB
+  - Wall
+  - HandA
+  - HandB
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - Box
   - AgentA
+  - AgentA-IgnoreSelfCollide
   - AgentB
-  - PostProcess
+  - AgentB-IgnoreSelfCollide
+  - 
+  - 
   - 
   - 
   - 
