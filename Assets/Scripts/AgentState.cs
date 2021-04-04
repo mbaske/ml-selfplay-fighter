@@ -63,7 +63,7 @@ namespace MBaske.SelfPlayFighter
             NormalizedCumulativeStrength = Mathf.Min(1, 
                 m_CumulativeStrength / RequiredCumulativeStrength * 2 - 1);
       
-            if (m_CumulativeStrength > RequiredCumulativeStrength)
+            if (m_CumulativeStrength >= RequiredCumulativeStrength)
             {
                 EndEpisodeReason = EndEpisodeReason.RequiredCumulativeStrengthExceeded;
                 EndEpisode = true;
@@ -102,8 +102,8 @@ namespace MBaske.SelfPlayFighter
                 {
                     EndEpisodeReason = EndEpisodeReason.InvalidPoseTimeout;
                     EndEpisode = true;
-                    return false;
                 }
+                return false;
             }
 
             m_InvalidHandDistanceStepCount = 0;
@@ -122,8 +122,8 @@ namespace MBaske.SelfPlayFighter
                 {
                     EndEpisodeReason = EndEpisodeReason.InvalidPoseTimeout;
                     EndEpisode = true;
-                    return false;
                 }
+                return false;
             }
 
             m_InvalidFootDistanceStepCount = 0;
