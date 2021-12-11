@@ -4,11 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/TrainerBalance.unity
-    guid: 4401b32cdea8c114f892e3d69508cc15
-  - enabled: 1
-    path: Assets/Scenes/TrainerSelfPlay.unity
-    guid: 55d73f88410f50e4ab1d5dd9558cee06
+  m_Scenes: []
   m_configObjects: {}

@@ -1,180 +1,166 @@
 using UnityEngine;
 using Unity.MLAgents;
-using System.Collections;
+using System.Collections.Generic;
 
-namespace MBaske.SelfPlayFighter
+// Controls episodes for a variable number of agents.
+// Cancels an episode on boxing ring collision (ground and ropes)
+// with any body parts other than feet.
+
+public class AgentController : MonoBehaviour
 {
-    public class AgentController : MonoBehaviour
+    protected List<FighterAgentBase> m_Agents;
+    protected Transform m_BoxingRing;
+
+    protected enum RotationMode
     {
-        [SerializeField]
-        private int m_DecisionInterval = 8;
-        [SerializeField, Tooltip("Step count including actions.")]
-        private int m_EpisodeMaxLength = 4000;
-        private int m_StepCount;
-        private bool m_IsActive;
-        private bool m_SelfPlay;
+        None, Random, Step
+    }
+    [SerializeField]
+    protected RotationMode m_RotationMode;
+    // Random rotations for training.
+    protected const float c_RandomRotationExtent = 75;
+    // Stepped rotations for demo recorder.
+    protected const float c_SteppedRotationIncrement = 40;
+    protected float m_SteppedRotationAngle = -100;
 
-        [Header("Self-Play")]
-        [SerializeField, Tooltip("Initial value, changes during training.")]
-        private float m_RequiredCumulativeStrength = 10;
+    [SerializeField, Tooltip("Seconds")]
+    protected int m_EpisodeLength = 30;
+    [SerializeField, Tooltip("Steps")]
+    protected int m_DecisionInterval = 6;
+    
+    protected int m_EpisodeMaxStep;
+    protected int m_EpisodeStepCount;
+    protected bool m_CancelEpisode;
+    protected bool m_IsActive;
+    protected float m_PrevTime;
+    // Wait 1 frame after ManagedReset.
+    protected InvokeAfterFrames m_DelayedStart;
 
-        private SelfPlayRewards m_SelfPlayRewards;
-        private FighterAgent[] m_Agents;
-        private int m_NumAgents;
+    protected void Start()
+    {
+        Initialize();
+    }
 
-        // NOTE from the docs:
-        // Switching from the Game view to the Scene view causes WaitForEndOfFrame to freeze. 
-        // It only continues when the application switches back to the Game view. 
-        // This can only happen when the application is working in the Unity editor.
-        private readonly YieldInstruction m_Wait = new WaitForEndOfFrame();
+    protected virtual void Initialize()
+    {
+        m_EpisodeMaxStep = m_EpisodeLength * SettingsProvider.FPS;
+        m_DelayedStart = new InvokeAfterFrames(this, StartEpisode, 1);
 
-        private void Start()
+        m_Agents = new List<FighterAgentBase>(GetComponentsInChildren<FighterAgentBase>());
+        m_Agents.ForEach(agent => agent.SetDecisionInterval(m_DecisionInterval));
+        m_BoxingRing = transform.Find("BoxingRing");
+
+        var detectors = GetComponentsInChildren<BoxingRingCollisionDetector>();
+        foreach (var detector in detectors)
         {
-            m_Agents = GetComponentsInChildren<FighterAgent>();
-            m_NumAgents = m_Agents.Length;
-            m_SelfPlay = m_NumAgents == 2;
-
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].SelfPlay = m_SelfPlay;
-                m_Agents[i].DecisionInterval = m_DecisionInterval;
-                m_Agents[i].EndEpisodeEvent += OnAgentEndsEpisode;
-            }
-
-            if (m_SelfPlay)
-            {
-                m_SelfPlayRewards = new SelfPlayRewards(
-                    m_Agents, m_RequiredCumulativeStrength);
-            }
-
-            StartCoroutine(BeginEpisode());
+            detector.CollisionEvent += OnBoxingRingCollision;
         }
 
-        private void OnAgentEndsEpisode(FighterAgent agent)
+        UpdateRotation();
+        m_DelayedStart.Invoke();
+    }
+
+    protected void SetActive(bool active)
+    {
+        m_IsActive = active;
+
+        if (active)
         {
-            if (m_IsActive)
-            {
-                m_SelfPlayRewards?.OnAgentEndsEpisode(agent);
-                StartCoroutine(EndEpisode());
-            }
+            Academy.Instance.AgentPreStep += OnAgentPreStep;
+        }
+        else
+        {
+            Academy.Instance.AgentPreStep -= OnAgentPreStep;
+        }
+    }
+
+    protected virtual void StartEpisode()
+    {
+        SetActive(true);
+
+        m_CancelEpisode = false;
+        m_EpisodeStepCount = 0;
+        m_PrevTime = Time.time - Time.fixedDeltaTime * m_DecisionInterval;
+    }
+
+    protected virtual void EndEpisode()
+    {
+        SetActive(false);
+
+        if (UpdateRotation())
+        {
+            m_Agents.ForEach(agent => agent.PrepareEndEpisode());
+            m_Agents.ForEach(agent => agent.EndEpisode());
+            m_Agents.ForEach(agent => agent.ManagedReset());
+
+            m_DelayedStart.Invoke();
+        }
+#if UNITY_EDITOR
+        else
+        {
+            // Stop recording demo after last rotation step.
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+#endif
+    }
+
+    protected virtual void OnAgentPreStep(int academyStepCount)
+    {
+        m_Agents.ForEach(agent => agent.OnEpisodeStep(m_EpisodeStepCount));
+
+        if (m_EpisodeStepCount % m_DecisionInterval == 0)
+        {
+            float deltaTime = Time.time - m_PrevTime;
+            m_PrevTime = Time.time;
+
+            m_Agents.ForEach(agent => agent.PrepareRequestDecision(deltaTime));
+            m_Agents.ForEach(agent => agent.RequestDecision());
+        }
+        else
+        {
+            m_Agents.ForEach(agent => agent.RequestAction());
         }
 
-        private void OnEpisodeMaxLengthReached()
+        if (m_CancelEpisode || ++m_EpisodeStepCount == m_EpisodeMaxStep)
         {
-            m_SelfPlayRewards?.OnEpisodeMaxLengthReached();
-            StartCoroutine(EndEpisode());
+            EndEpisode();
+        }
+    }
+
+    protected virtual void OnBoxingRingCollision(
+        string detectorTag, string agentTag)
+    {
+        CancelEpisode();
+    }
+
+    protected void CancelEpisode()
+    {
+        m_CancelEpisode = true;
+    }
+
+    protected void OnApplicationQuit()
+    {
+        SetActive(false);
+    }
+
+    // Returns false only if mode = stepped and no  
+    // more rotation steps are available (demo recorder).
+    protected bool UpdateRotation()
+    {
+        if (m_RotationMode == RotationMode.None)
+        {
+            return true;
         }
 
+        bool step = m_RotationMode == RotationMode.Step;
+        float angle = step
+            ? m_SteppedRotationAngle += c_SteppedRotationIncrement
+            : Random.Range(-c_RandomRotationExtent, c_RandomRotationExtent);
 
-        private IEnumerator EndEpisode()
-        {
-            ToggleActive(false);
+        var rot = Quaternion.AngleAxis(angle, Vector3.up);
+        m_BoxingRing.localRotation = Quaternion.Inverse(rot);
+        transform.localRotation = rot;
 
-            // NOTE EndEpisode will invoke an extra CollectObservations call,
-            // see Agent.NotifyAgentDone 'Make sure the latest observations are being passed to training.'
-
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].EndEpisode();
-            }
-
-            yield return m_Wait;
-
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].DestroyRig();
-            }
-
-            yield return m_Wait;
-
-            StartCoroutine(BeginEpisode());
-        }
-
-        private IEnumerator BeginEpisode()
-        {
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].InstantiateRig();
-            }
-
-            yield return m_Wait;
-
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].ResetAgent();
-            }
-
-            yield return m_Wait;
-
-            ToggleActive(true);
-        }
-
-        private void ToggleActive(bool active)
-        {
-            if (active != m_IsActive)
-            {
-                m_IsActive = active;
-                m_StepCount = 0;
-
-                if (m_IsActive)
-                {
-                    Academy.Instance.AgentPreStep += OnAgentPreStep;
-                }
-                else
-                {
-                    Academy.Instance.AgentPreStep -= OnAgentPreStep;
-                }
-            }
-            else
-            {
-                Debug.LogError("Controller already " + (m_IsActive ? "active" : "incative"));
-            }
-        }
-
-        private void OnAgentPreStep(int academyStepCount)
-        {
-            if (m_StepCount % m_DecisionInterval == 0)
-            {
-                for (int i = 0; i < m_NumAgents; i++)
-                {
-                    if (m_Agents[i].IsActive)
-                    {
-                        m_Agents[i].EpisodeStep = m_StepCount;
-                        m_Agents[i].RequestDecision();
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < m_NumAgents; i++)
-                {
-                    if (m_Agents[i].IsActive)
-                    {
-                        m_Agents[i].EpisodeStep = m_StepCount;
-                        m_Agents[i].RequestAction();
-                    }
-                }
-            }
-
-            if (m_StepCount == m_EpisodeMaxLength)
-            {
-                OnEpisodeMaxLengthReached();
-            }
-
-            m_StepCount++;
-        }
-
-        private void OnDestroy()
-        {
-            if (Academy.IsInitialized)
-            {
-                Academy.Instance.AgentPreStep -= OnAgentPreStep;
-            }
-
-            for (int i = 0; i < m_NumAgents; i++)
-            {
-                m_Agents[i].EndEpisodeEvent -= OnAgentEndsEpisode;
-            }
-        }
+        return !(step && angle > 90);
     }
 }

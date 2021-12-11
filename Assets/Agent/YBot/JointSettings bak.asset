@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15c9875d8d254e2f8c012cb2d8da925, type: 3}
+  m_Name: JointSettings bak
+  m_EditorClassIdentifier: 
+  SpringDamping: 200
+  SpringStiffness: 5000
+  SpringForceLimit: 100000
+  Joints:
+  - Name: LeftUpLeg
+    TwistAxis: 1
+    MinSwingTwist: {x: -78, y: -49, z: -65}
+    MaxSwingTwist: {x: 33, y: 17, z: 21}
+    Extent: {x: 55.5, y: 33, z: 43}
+    Center: {x: -22.5, y: -16, z: -22}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: LeftLeg
+    TwistAxis: 1
+    MinSwingTwist: {x: -1, y: -14, z: -12}
+    MaxSwingTwist: {x: 95, y: 12, z: 11}
+    Extent: {x: 48, y: 13, z: 11.5}
+    Center: {x: 47, y: -1, z: -0.5}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: -0.1, y: 0.55, z: 0.1}
+      m_Extent: {x: 0.4, y: 0.4, z: 0.4}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0.55, z: 1}
+      m_Extent: {x: 1.25, y: 0.4, z: 1}
+  - Name: LeftFoot
+    TwistAxis: 1
+    MinSwingTwist: {x: -46, y: -34, z: -10}
+    MaxSwingTwist: {x: 34, y: 33, z: 34}
+    Extent: {x: 40, y: 33.5, z: 22}
+    Center: {x: -6, y: -0.5, z: 12}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: -0.1, y: 0.3, z: 0}
+      m_Extent: {x: 0.5, y: 0.25, z: 0.7}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0.3, z: 1}
+      m_Extent: {x: 1.25, y: 0.25, z: 1}
+  - Name: LeftToeBase
+    TwistAxis: 2
+    MinSwingTwist: {x: -36, y: -10, z: -16}
+    MaxSwingTwist: {x: 4, y: 3, z: 31}
+    Extent: {x: 20, y: 6.5, z: 23.5}
+    Center: {x: -16, y: -3.5, z: 7.5}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: RightUpLeg
+    TwistAxis: 1
+    MinSwingTwist: {x: -78, y: -17, z: -21}
+    MaxSwingTwist: {x: 33, y: 49, z: 65}
+    Extent: {x: 55.5, y: 33, z: 43}
+    Center: {x: -22.5, y: 16, z: 22}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: RightLeg
+    TwistAxis: 1
+    MinSwingTwist: {x: -1, y: -12, z: -11}
+    MaxSwingTwist: {x: 95, y: 14, z: 12}
+    Extent: {x: 48, y: 13, z: 11.5}
+    Center: {x: 47, y: 1, z: 0.5}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0.1, y: 0.55, z: 0.1}
+      m_Extent: {x: 0.4, y: 0.4, z: 0.4}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0.55, z: 1}
+      m_Extent: {x: 1.25, y: 0.4, z: 1}
+  - Name: RightFoot
+    TwistAxis: 1
+    MinSwingTwist: {x: -46, y: -33, z: -34}
+    MaxSwingTwist: {x: 34, y: 34, z: 10}
+    Extent: {x: 40, y: 33.5, z: 22}
+    Center: {x: -6, y: 0.5, z: -12}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0.1, y: 0.3, z: 0}
+      m_Extent: {x: 0.5, y: 0.25, z: 0.7}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0.3, z: 1}
+      m_Extent: {x: 1.25, y: 0.25, z: 1}
+  - Name: RightToeBase
+    TwistAxis: 2
+    MinSwingTwist: {x: -36, y: -3, z: -31}
+    MaxSwingTwist: {x: 4, y: 10, z: 16}
+    Extent: {x: 20, y: 6.5, z: 22.5}
+    Center: {x: -16, y: 3.5, z: -6.5}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: Spine
+    TwistAxis: 1
+    MinSwingTwist: {x: -18, y: -33, z: -22}
+    MaxSwingTwist: {x: 35, y: 33, z: 22}
+    Extent: {x: 26.5, y: 33, z: 22}
+    Center: {x: 8.5, y: 0, z: 0}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0, y: 0.9, z: 0}
+      m_Extent: {x: 0.3, y: 0.4, z: 0.3}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0.9, z: 1}
+      m_Extent: {x: 1, y: 0.4, z: 1}
+  - Name: Spine1
+    TwistAxis: 1
+    MinSwingTwist: {x: -6, y: -15, z: -9}
+    MaxSwingTwist: {x: 15, y: 15, z: 9}
+    Extent: {x: 10.5, y: 15, z: 9}
+    Center: {x: 4.5, y: 0, z: 0}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: Spine2
+    TwistAxis: 1
+    MinSwingTwist: {x: -6, y: -15, z: -9}
+    MaxSwingTwist: {x: 15, y: 15, z: 9}
+    Extent: {x: 10.5, y: 15, z: 9}
+    Center: {x: 4.5, y: 0, z: 0}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0, y: 1.2, z: 0}
+      m_Extent: {x: 0.4, y: 0.4, z: 0.4}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.3, z: 1}
+      m_Extent: {x: 1, y: 0.4, z: 1}
+  - Name: LeftShoulder
+    TwistAxis: 0
+    MinSwingTwist: {x: -23, y: -26, z: -39}
+    MaxSwingTwist: {x: 21, y: 37, z: 26}
+    Extent: {x: 22, y: 31.5, z: 32.5}
+    Center: {x: -1, y: 5.5, z: -6.5}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: LeftArm
+    TwistAxis: 0
+    MinSwingTwist: {x: -121, y: -58, z: -25}
+    MaxSwingTwist: {x: 46, y: 113, z: 66}
+    Extent: {x: 83.5, y: 85.5, z: 45.5}
+    Center: {x: -37.5, y: 27.5, z: 20.5}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: -0.2, y: 1.2, z: 0}
+      m_Extent: {x: 0.4, y: 0.4, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1, y: 0.4, z: 1}
+  - Name: LeftForeArm
+    TwistAxis: 0
+    MinSwingTwist: {x: -6, y: -1, z: -9}
+    MaxSwingTwist: {x: 16, y: 146, z: 17}
+    Extent: {x: 11, y: 73.5, z: 13}
+    Center: {x: 5, y: 72.5, z: 4}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: -0.2, y: 1.2, z: 0.1}
+      m_Extent: {x: 0.6, y: 0.5, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1.25, y: 0.5, z: 1}
+  - Name: LeftHand
+    TwistAxis: 0
+    MinSwingTwist: {x: -115, y: -16, z: -69}
+    MaxSwingTwist: {x: 45, y: 48, z: 31}
+    Extent: {x: 80, y: 32, z: 50}
+    Center: {x: -35, y: 16, z: -19}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: -0.2, y: 1.2, z: 0.1}
+      m_Extent: {x: 0.6, y: 0.5, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1.25, y: 0.5, z: 1}
+  - Name: Neck
+    TwistAxis: 1
+    MinSwingTwist: {x: -13, y: -23, z: -19}
+    MaxSwingTwist: {x: 18, y: 23, z: 19}
+    Extent: {x: 15.5, y: 23, z: 19}
+    Center: {x: 2.5, y: 0, z: 0}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: Head
+    TwistAxis: 1
+    MinSwingTwist: {x: -17, y: -49, z: -30}
+    MaxSwingTwist: {x: 39, y: 49, z: 30}
+    Extent: {x: 28, y: 49, z: 30}
+    Center: {x: 11, y: 0, z: 0}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0, y: 1.4, z: 0.1}
+      m_Extent: {x: 0.5, y: 0.4, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.4, z: 1}
+      m_Extent: {x: 1, y: 0.4, z: 1}
+  - Name: RightShoulder
+    TwistAxis: 0
+    MinSwingTwist: {x: -23, y: -37, z: -26}
+    MaxSwingTwist: {x: 21, y: 26, z: 39}
+    Extent: {x: 22, y: 31.5, z: 32.5}
+    Center: {x: -1, y: -5.5, z: 6.5}
+    DrawGizmos: 0
+    ObserveMotion: 0
+    SelfBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+    OpponentBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  - Name: RightArm
+    TwistAxis: 0
+    MinSwingTwist: {x: -121, y: -113, z: -66}
+    MaxSwingTwist: {x: 46, y: 58, z: 25}
+    Extent: {x: 83.5, y: 85.5, z: 45.5}
+    Center: {x: -37.5, y: -27.5, z: -20.5}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0.2, y: 1.2, z: 0}
+      m_Extent: {x: 0.4, y: 0.4, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1, y: 0.4, z: 1}
+  - Name: RightForeArm
+    TwistAxis: 0
+    MinSwingTwist: {x: -6, y: -146, z: -17}
+    MaxSwingTwist: {x: 16, y: 1, z: 9}
+    Extent: {x: 11, y: 73.5, z: 13}
+    Center: {x: 5, y: -72.5, z: -4}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0.2, y: 1.2, z: 0.1}
+      m_Extent: {x: 0.6, y: 0.5, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1.25, y: 0.5, z: 1}
+  - Name: RightHand
+    TwistAxis: 0
+    MinSwingTwist: {x: -115, y: -48, z: -31}
+    MaxSwingTwist: {x: 47, y: 16, z: 69}
+    Extent: {x: 81, y: 32, z: 49.5}
+    Center: {x: -34, y: -16, z: 18.5}
+    DrawGizmos: 0
+    ObserveMotion: 1
+    SelfBounds:
+      m_Center: {x: 0.2, y: 1.2, z: 0.1}
+      m_Extent: {x: 0.6, y: 0.5, z: 0.5}
+    OpponentBounds:
+      m_Center: {x: 0, y: 1.2, z: 1}
+      m_Extent: {x: 1.25, y: 0.5, z: 1}

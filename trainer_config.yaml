@@ -1,16 +1,15 @@
 behaviors:
-
   Fighter:
     trainer_type: ppo
     hyperparameters:
       batch_size: 2048
-      buffer_size: 73728 
+      buffer_size: 51200 
       learning_rate: 0.0003
       beta: 0.01
       epsilon: 0.2
       lambd: 0.95
       num_epoch: 3
-      learning_rate_schedule: constant
+      learning_rate_schedule: linear
     network_settings:
       normalize: false
       hidden_units: 1024
@@ -20,15 +19,22 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-    keep_checkpoints: 10
-    max_steps: 1e8
-    time_horizon: 512
+      gail:
+        gamma: 0.99
+        strength: 0.01
+        demo_path: Fight.demo
+    keep_checkpoints: 5
+    max_steps: 200000000
+    time_horizon: 1000
     summary_freq: 10000
-    threaded: true
-    # self_play:
-    #   window: 10
-    #   play_against_latest_model_ratio: 0.5
-    #   save_steps: 50000
-    #   swap_steps: 2000
-    #   team_change: 100000
-    #   initial_elo: 1200.0
+    #behavioral_cloning:
+      #demo_path: Fight.demo
+      #steps: 20000000
+      #strength: 0.5
+    #self_play:
+      #window: 10
+      #play_against_latest_model_ratio: 0.5
+      #save_steps: 50000
+      #swap_steps: 2000
+      #team_change: 100000
+      #initial_elo: 1200.0

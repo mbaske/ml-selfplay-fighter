@@ -4,11 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - AgentA
+  - AgentB
+  - Foot
+  - BoxingRing
+  - Ground
+  - Walls
   - TargetA
   - TargetB
-  - Wall
-  - HandA
-  - HandB
+  - BlockA
+  - BlockB
   layers:
   - Default
   - TransparentFX
@@ -17,9 +22,9 @@ TagManager:
   - Water
   - UI
   - AgentA
-  - AgentA-IgnoreSelfCollide
+  - AgentA-NoSelfCollision
   - AgentB
-  - AgentB-IgnoreSelfCollide
+  - AgentB-NoSelfCollision
   - 
   - 
   - 
